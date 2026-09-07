@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — Zenex Mods</title>
+<meta name="description" content="Frequently asked questions about Zenex Mods downloads and setup.">
+<meta name="theme-color" content="#0b0906">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <div class="loader-mark">Z</div>
+    <div class="loader-word">ZENEX<span>MODS</span></div>
+    <div class="loader-bar"><span id="loader-fill"></span></div>
+  </div>
+</div>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"><span id="scroll-progress-fill"></span></div>
+<div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+<div class="bg-field" aria-hidden="true">
+  <canvas id="field-canvas"></canvas>
+  <div class="bg-grid"></div>
+  <div class="bg-noise"></div>
+  <div class="glow-blob glow-ember" id="blob-1"></div>
+  <div class="glow-blob glow-verdigris" id="blob-2"></div>
+</div>
+
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html#home" class="brand">
+      <span class="brand-mark">Z</span>
+      <span class="brand-name">Zenex<span class="accent">Mods</span></span>
+    </a>
+    <nav class="nav-links" id="nav-links" aria-label="Primary">
+      <a href="index.html#home">Home</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="index.html#fabric">Fabric API</a>
+      <a href="index.html#discord">Discord</a>
+      <a href="faq.html" class="active">FAQ</a>
+      <a href="terms.html">Terms</a>
+      <a href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener">YouTube</a>
+    </nav>
+    <a href="downloads.html" class="nav-cta btn btn-primary">Get Mods</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-header">
+    <div class="section-inner">
+      <p class="section-kicker reveal">Questions</p>
+      <h1 class="section-title reveal">Frequently asked questions</h1>
+      <p class="section-lead reveal">Quick answers about setup, dependencies, and support. Can't find what you need? Ask in Discord.</p>
+    </div>
+  </section>
+
+  <section class="downloads" style="padding-top:10px;">
+    <div class="section-inner">
+      <div class="faq-list">
+
+        <div class="faq-item reveal">
+          <button class="faq-question" aria-expanded="false">
+            <span>Do I need Fabric API?</span>
+            <span class="faq-question-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Yes. Every mod on this site runs on Fabric, so Fabric API has to be installed first. If it's missing, none of the mods below will load. Grab it from Modrinth on the homepage before downloading anything.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-question" aria-expanded="false">
+            <span>Do Meteor Client and Glazed depend on each other?</span>
+            <span class="faq-question-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Yes — they're built to run together. Meteor Client requires Glazed Spoofer to work correctly, and Glazed requires Meteor Client. Install both from their version pages, along with Fabric API.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-question" aria-expanded="false">
+            <span>Which version should I download?</span>
+            <span class="faq-question-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Each mod's version page lists which Minecraft release each build targets. Pick the version that matches your game install. If you're unsure, the build marked "Latest" is the one to start with.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-question" aria-expanded="false">
+            <span>Where do I get changelogs and setup help?</span>
+            <span class="faq-question-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Full changelogs, setup notes, and rundowns for Glazed, RigMaster V2, and CPVP Tweaks are all posted and kept up to date in the Zenex Discord.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-question" aria-expanded="false">
+            <span>Is Zenex Mods affiliated with Mojang or Minecraft?</span>
+            <span class="faq-question-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>No. Zenex Mods is an independent, unofficial distribution hub for client-side Minecraft mods and is not affiliated with or endorsed by Mojang or Microsoft. See the Terms page for the full picture.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="brand-name">Zenex<span class="accent">Mods</span></span>
+      <p>Minecraft client mods, done cleanly.</p>
+    </div>
+    <div class="footer-links">
+      <h3>Quick links</h3>
+      <a href="index.html#home">Home</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="faq.html">FAQ</a>
+      <a href="terms.html">Terms</a>
+    </div>
+    <div class="footer-social">
+      <h3>Community</h3>
+      <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Discord</a>
+      <a href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; <span id="year"></span> Zenex Mods. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

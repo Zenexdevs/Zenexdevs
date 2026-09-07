@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Zenex Mods</title>
+<meta name="description" content="Terms of Service for Zenex Mods.">
+<meta name="theme-color" content="#0b0906">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <div class="loader-mark">Z</div>
+    <div class="loader-word">ZENEX<span>MODS</span></div>
+    <div class="loader-bar"><span id="loader-fill"></span></div>
+  </div>
+</div>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"><span id="scroll-progress-fill"></span></div>
+<div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+<div class="bg-field" aria-hidden="true">
+  <canvas id="field-canvas"></canvas>
+  <div class="bg-grid"></div>
+  <div class="bg-noise"></div>
+  <div class="glow-blob glow-ember" id="blob-1"></div>
+  <div class="glow-blob glow-verdigris" id="blob-2"></div>
+</div>
+
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html#home" class="brand">
+      <span class="brand-mark">Z</span>
+      <span class="brand-name">Zenex<span class="accent">Mods</span></span>
+    </a>
+    <nav class="nav-links" id="nav-links" aria-label="Primary">
+      <a href="index.html#home">Home</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="index.html#fabric">Fabric API</a>
+      <a href="index.html#discord">Discord</a>
+      <a href="faq.html">FAQ</a>
+      <a href="terms.html" class="active">Terms</a>
+      <a href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener">YouTube</a>
+    </nav>
+    <a href="downloads.html" class="nav-cta btn btn-primary">Get Mods</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-header">
+    <div class="section-inner">
+      <p class="section-kicker reveal">Legal</p>
+      <h1 class="section-title reveal">Terms of Service</h1>
+      <p class="terms-updated reveal">Placeholder draft — replace with your reviewed terms before publishing.</p>
+    </div>
+  </section>
+
+  <section class="downloads" style="padding-top:0;">
+    <div class="section-inner">
+      <div class="terms-layout">
+
+        <nav class="terms-nav" aria-label="Terms sections">
+          <a href="#acceptance">Acceptance of terms</a>
+          <a href="#service">The service</a>
+          <a href="#third-party">Third-party software</a>
+          <a href="#responsibility">Your responsibility</a>
+          <a href="#availability">Availability</a>
+          <a href="#changes">Changes to these terms</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="terms-body">
+
+          <section id="acceptance" class="reveal">
+            <h2>1. Acceptance of terms</h2>
+            <p>By accessing or using the Zenex Mods website, you agree to these Terms of Service. If you don't agree with any part of these terms, please don't use the site.</p>
+          </section>
+
+          <section id="service" class="reveal">
+            <h2>2. The service</h2>
+            <p>Zenex Mods is a website that provides links to download Minecraft client mods, including Meteor Client, Glazed, RigMaster V2, and CPVP Tweaks. Zenex provides the site and download links as-is; support, changelogs, and setup notes are provided through the Zenex Discord.</p>
+          </section>
+
+          <section id="third-party" class="reveal">
+            <h2>3. Third-party software</h2>
+            <p>Some mods listed on this site are developed and maintained by third parties. Zenex does not claim ownership or authorship of third-party mods and only provides distribution and community support around them. Use of any mod is subject to that mod's own license and to any rules set by the Minecraft servers or environments you use it in.</p>
+            <p>Minecraft is a trademark of Mojang Studios / Microsoft. Zenex Mods is an independent project and is not affiliated with, endorsed by, or sponsored by Mojang or Microsoft.</p>
+          </section>
+
+          <section id="responsibility" class="reveal">
+            <h2>4. Your responsibility</h2>
+            <p>You are responsible for how you use any mod downloaded from this site, including compliance with the rules of any server, platform, or game mode you use it on. Zenex is not responsible for consequences arising from that use, including but not limited to server bans or account actions taken by third parties.</p>
+          </section>
+
+          <section id="availability" class="reveal">
+            <h2>5. Availability</h2>
+            <p>Downloads, versions, and features may change, be updated, or be removed at any time without notice. Zenex does not guarantee uninterrupted availability of the site or any download link.</p>
+          </section>
+
+          <section id="changes" class="reveal">
+            <h2>6. Changes to these terms</h2>
+            <p>These terms may be updated from time to time. Continued use of the site after changes are posted means you accept the updated terms.</p>
+          </section>
+
+          <section id="contact" class="reveal">
+            <h2>7. Contact</h2>
+            <p>Questions about these terms can be asked in the <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Zenex Discord</a>.</p>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="brand-name">Zenex<span class="accent">Mods</span></span>
+      <p>Minecraft client mods, done cleanly.</p>
+    </div>
+    <div class="footer-links">
+      <h3>Quick links</h3>
+      <a href="index.html#home">Home</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="faq.html">FAQ</a>
+      <a href="terms.html">Terms</a>
+    </div>
+    <div class="footer-social">
+      <h3>Community</h3>
+      <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Discord</a>
+      <a href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; <span id="year"></span> Zenex Mods. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
