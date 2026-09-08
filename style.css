@@ -569,6 +569,19 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
   padding: 4px 10px; border-radius: 999px;
 }
 
+.badge-opensource {
+  display: flex; align-items: center; gap: 9px;
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 11px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(var(--verdigris-rgb), 0.35);
+  background: rgba(var(--verdigris-rgb), 0.07);
+  color: var(--white);
+  font-size: 0.88rem; font-weight: 600;
+}
+.badge-opensource svg { color: var(--verdigris-soft); width: 15px; height: 15px; flex-shrink: 0; }
+
 .mod-download {
   position: relative;
   width: 100%;
@@ -581,17 +594,12 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
   overflow: hidden;
   transition: border-color 0.3s, background 0.3s, transform 0.3s var(--ease-spring);
 }
-.mod-card-featured .mod-download {
-  background: linear-gradient(135deg, var(--ember), #d8461a);
-  color: #180a02; border-color: transparent;
-}
 .mod-download:hover { transform: translateY(-2px); border-color: var(--surface-border-hover); }
 .mod-download:active { transform: scale(0.97); }
 
 .btn-success { display: none; }
 .mod-download.downloaded .btn-label { display: none; }
 .mod-download.downloaded .btn-success { display: inline; color: var(--verdigris-soft); }
-.mod-card-featured .mod-download.downloaded .btn-success { color: #133326; }
 
 .mod-download.pulse { animation: downloadPulse 0.5s var(--ease-spring); }
 @keyframes downloadPulse { 0% { transform: scale(1); } 40% { transform: scale(0.95); } 100% { transform: scale(1); } }
