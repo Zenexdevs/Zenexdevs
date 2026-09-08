@@ -1051,6 +1051,18 @@ body[class*="accent-"] .section-kicker::before { background: var(--accent-soft);
 .terms-body ul { padding-left: 20px; margin: 0 0 12px; }
 .terms-updated { color: var(--muted-dim); font-size: 0.85rem; margin-top: -6px; }
 
+.terms-body p a {
+  color: var(--ember-soft);
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--ember-rgb), 0.6);
+  text-underline-offset: 3px;
+  transition: color 0.25s, text-decoration-color 0.25s;
+}
+.terms-body p a:hover {
+  color: var(--ember);
+  text-decoration-color: var(--ember);
+}
+
 @media (max-width: 860px) {
   .terms-layout { grid-template-columns: 1fr; }
   .terms-nav { position: static; flex-direction: row; flex-wrap: wrap; top: auto; }
