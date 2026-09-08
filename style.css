@@ -443,6 +443,10 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
   position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%);
   width: 22px; height: 36px; border-radius: 12px;
   border: 1px solid var(--surface-border);
+  pointer-events: none;
+}
+@media (max-height: 820px) {
+  .scroll-cue { display: none; }
 }
 .scroll-cue span {
   position: absolute; top: 7px; left: 50%; margin-left: -1.5px;
@@ -535,9 +539,6 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 .mod-card:hover { border-color: var(--surface-border-hover); background: var(--surface-2); }
 
 .mod-card-featured {
-  grid-column: span 2;
-  grid-row: span 2;
-  padding: 34px;
   background: linear-gradient(160deg, rgba(var(--ember-rgb), 0.10), var(--surface) 55%);
 }
 
@@ -556,10 +557,8 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
   color: var(--ember-soft);
   margin-bottom: 18px;
 }
-.mod-card-featured .mod-icon { width: 56px; height: 56px; }
 
 .mod-name { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; margin: 0 0 8px; }
-.mod-card-featured .mod-name { font-size: 1.55rem; }
 .mod-desc { margin: 0 0 16px; color: var(--muted); font-size: 0.92rem; line-height: 1.55; }
 .mod-meta { margin-bottom: 20px; }
 .mc-tag {
@@ -618,11 +617,9 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 
 @media (max-width: 900px) {
   .card-grid { grid-template-columns: repeat(2, 1fr); }
-  .mod-card-featured { grid-column: span 2; grid-row: span 1; }
 }
 @media (max-width: 620px) {
   .card-grid { grid-template-columns: 1fr; }
-  .mod-card-featured { grid-column: span 1; }
 }
 
 /* ---------- Open source strip ---------- */
