@@ -169,7 +169,12 @@ function initGlobalClickRipple() {
   }, { passive: true });
 }
 
-/* ---------- Mouse-reactive particle field ---------- */
+/* ---------- Fire ember particle field ---------- */
+// Ambient embers drift upward across the whole viewport, flickering in
+// size/opacity with a warm ember→red→gold palette and a soft glow via
+// canvas shadowBlur. Cursor gently repels nearby embers for a subtle
+// interactive layer. Respects prefers-reduced-motion (draws one static
+// frame instead of animating).
 function initParticleField() {
   const canvas = document.getElementById('field-canvas');
   if (!canvas) return;
@@ -178,46 +183,54 @@ function initParticleField() {
   let width, height;
   const mouse = { x: -9999, y: -9999, active: false };
 
+  const PALETTE = [
+    [255, 106, 43],  // ember
+    [255, 59, 59],   // rigmaster red
+    [255, 210, 122],  // star gold
+    [255, 160, 90]   // soft ember
+  ];
+
+  function makeParticle(spawnAtBottom) {
+    const tone = PALETTE[Math.floor(Math.random() * PALETTE.length)];
+    return {
+      x: Math.random() * width,
+      y: spawnAtBottom ? height + Math.random() * 40 : Math.random() * height,
+      r: Math.random() * 2.2 + 0.7,
+      baseR: 0,
+      vy: -(Math.random() * 0.45 + 0.18),
+      vx: (Math.random() - 0.5) * 0.22,
+      sway: Math.random() * Math.PI * 2,
+      swaySpeed: Math.random() * 0.015 + 0.006,
+      swayAmp: Math.random() * 0.35 + 0.1,
+      flicker: Math.random() * Math.PI * 2,
+      flickerSpeed: Math.random() * 0.05 + 0.02,
+      baseAlpha: Math.random() * 0.45 + 0.25,
+      color: tone,
+      glow: Math.random() < 0.35
+    };
+  }
+
   function resize() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
-    const count = Math.min(64, Math.floor((width * height) / 24000));
-    particles = Array.from({ length: count }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      baseVx: (Math.random() - 0.5) * 0.14,
-      baseVy: (Math.random() - 0.5) * 0.14,
-      r: Math.random() * 1.5 + 0.6,
-      alpha: Math.random() * 0.3 + 0.12,
-      warm: Math.random() < 0.14
-    }));
+    const count = Math.min(90, Math.floor((width * height) / 19000));
+    particles = Array.from({ length: count }, () => makeParticle(false));
   }
 
-  const REPEL_RADIUS = 140;
-  const REPEL_STRENGTH = 0.55;
+  const REPEL_RADIUS = 120;
+  const REPEL_STRENGTH = 0.5;
 
   function draw() {
     ctx.clearRect(0, 0, width, height);
 
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const a = particles[i], b = particles[j];
-        const dx = a.x - b.x, dy = a.y - b.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 130) {
-          ctx.strokeStyle = `rgba(143, 212, 188, ${0.05 * (1 - dist / 130)})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
-        }
-      }
-    }
-
     for (const p of particles) {
-      let vx = p.baseVx;
-      let vy = p.baseVy;
+      p.flicker += p.flickerSpeed;
+      const flick = 0.55 + Math.sin(p.flicker) * 0.45;
+      const alpha = p.baseAlpha * flick;
+      const radius = p.r * (0.75 + flick * 0.4);
+
+      let vx = p.vx;
+      const vy = p.vy;
 
       if (mouse.active) {
         const dx = p.x - mouse.x;
@@ -226,24 +239,32 @@ function initParticleField() {
         if (dist < REPEL_RADIUS && dist > 0.01) {
           const force = (1 - dist / REPEL_RADIUS) * REPEL_STRENGTH;
           vx += (dx / dist) * force;
-          vy += (dy / dist) * force;
         }
       }
 
+      const [r, g, b] = p.color;
       ctx.beginPath();
-      ctx.fillStyle = p.warm
-        ? `rgba(255, 160, 106, ${p.alpha})`
-        : `rgba(171, 157, 137, ${p.alpha * 0.8})`;
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      if (p.glow) {
+        ctx.shadowBlur = radius * 4.5;
+        ctx.shadowColor = `rgba(${r}, ${g}, ${b}, ${alpha * 0.8})`;
+      } else {
+        ctx.shadowBlur = 0;
+      }
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
       ctx.fill();
+      ctx.shadowBlur = 0;
 
       if (!prefersReducedMotion) {
-        p.x += vx;
+        p.sway += p.swaySpeed;
+        p.x += vx + Math.sin(p.sway) * p.swayAmp * 0.06;
         p.y += vy;
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
+
+        if (p.y < -20) {
+          Object.assign(p, makeParticle(true));
+        }
+        if (p.x < -20) p.x = width + 20;
+        if (p.x > width + 20) p.x = -20;
       }
     }
 
