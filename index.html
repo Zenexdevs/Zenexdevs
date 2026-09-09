@@ -4,29 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zenex Mods — Minecraft Mods Done Right</title>
-<meta name="description" content="Zenex Mods — a premium hub for downloading Minecraft client mods. Meteor Client, Glazed, RigMaster V2, CPVP Tweaks, and more.">
+<meta name="description" content="Zenex Mods is a direct download hub for Minecraft client mods — Meteor Client, Glazed, RigMaster V2 and CPVP Tweaks. No redirects, no ad-gates, real support in Discord.">
 
 <meta property="og:title" content="Zenex Mods — Minecraft Mods Done Right">
-<meta property="og:description" content="A premium hub for downloading Minecraft client mods.">
+<meta property="og:description" content="A direct download hub for Minecraft client mods. No redirects, no ad-gates.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="images/og-banner.png">
 <meta property="og:url" content="https://zenexdevs.github.io/Zenexdevs/">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Zenex Mods — Minecraft Mods Done Right">
-<meta name="twitter:description" content="A premium hub for downloading Minecraft client mods.">
+<meta name="twitter:description" content="A direct download hub for Minecraft client mods.">
 <meta name="twitter:image" content="images/og-banner.png">
 
-<meta name="theme-color" content="#ff6a2b">
+<meta name="theme-color" content="#7b61ff">
 <link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<noscript>
+  <!-- Without JS the reveal animations never fire, so make everything visible. -->
+  <style>
+    .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
+    .word { opacity: 1 !important; transform: none !important; }
+    .loader { display: none !important; }
+    .faq-a { grid-template-rows: 1fr !important; }
+  </style>
+</noscript>
 </head>
 <body>
 
-<!-- Loading screen -->
+<!-- ══ Loader ══ -->
 <div class="loader" id="loader" aria-hidden="true">
   <div class="loader-inner">
     <div class="loader-mark">Z</div>
@@ -36,23 +46,20 @@
 </div>
 
 <a class="skip-link" href="#main">Skip to content</a>
-
-<!-- Scroll progress -->
-<div class="scroll-progress" id="scroll-progress" aria-hidden="true"><span id="scroll-progress-fill"></span></div>
-
-<!-- Custom cursor (desktop only) -->
+<div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-fill"></span></div>
 <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
 <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 
-<!-- Animated background -->
-<div class="bg-field" aria-hidden="true">
-  <canvas id="field-canvas"></canvas>
-  <div class="bg-noise"></div>
-  <div class="glow-blob glow-ember" id="blob-1"></div>
-  <div class="glow-blob glow-verdigris" id="blob-2"></div>
+<!-- ══ Background stack ══ -->
+<div class="backdrop" aria-hidden="true">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas id="spark-canvas"></canvas>
+  <div class="bg-grid"></div>
+  <div class="bg-grain"></div>
+  <div class="bg-vignette"></div>
 </div>
 
-<!-- Navbar -->
+<!-- ══ Navbar ══ -->
 <header class="navbar" id="navbar">
   <div class="nav-inner">
     <a href="#home" class="brand">
@@ -71,7 +78,7 @@
       <a href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener">YouTube</a>
     </nav>
 
-    <a href="#downloads" class="nav-cta btn btn-primary">Get Mods</a>
+    <a href="#downloads" class="nav-cta btn btn-primary btn-sm">Get Mods</a>
 
     <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
       <span></span><span></span><span></span>
@@ -81,215 +88,506 @@
 
 <main id="main">
 
-  <!-- Hero -->
-  <section class="hero" id="home">
-    <div class="hero-inner">
-      <div class="status-badge reveal" data-reveal-delay="0">
-        <span class="status-dot"></span>
-        Actively maintained · updated weekly
-      </div>
-      <h1 class="hero-title hero-glow reveal" data-reveal-delay="1">Zenex Mods</h1>
-      <p class="hero-tagline reveal" data-reveal-delay="2">Mods you actually use, nothing you don't.</p>
-      <p class="hero-subtitle reveal" data-reveal-delay="2">Zenex is a small, direct hub for Minecraft client mods — Meteor Client, Glazed, RigMaster V2 and more. Straight downloads, real support in Discord.</p>
-      <div class="hero-actions reveal" data-reveal-delay="3">
-        <a href="#downloads" class="btn btn-primary">Browse downloads</a>
-        <a href="#discord" class="btn btn-ghost">Join Discord</a>
-      </div>
-    </div>
-  </section>
+  <!-- ══════════════ HERO ══════════════ -->
+  <section class="hero shell" id="home">
+    <div class="hero-grid">
 
-  <!-- Fabric API -->
-  <section class="fabric-section" id="fabric">
-    <div class="section-inner">
-      <div class="fabric-card tilt reveal">
-        <div class="fabric-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2.6" y="9" width="3.4" height="6" rx="1.7" stroke="currentColor" stroke-width="1.4"/>
-            <rect x="18" y="9" width="3.4" height="6" rx="1.7" stroke="currentColor" stroke-width="1.4"/>
-            <path d="M6 9.6h12v4.8H6Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
-            <path d="M9 11.6h6M9 12.8h6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-          </svg>
+      <div class="hero-copy">
+        <div class="pill-badge reveal">
+          <span class="live-dot"></span>
+          <b>Actively maintained</b> · updated weekly
         </div>
-        <div class="fabric-copy">
-          <p class="fabric-label">Required dependency</p>
-          <h2 class="fabric-title">Fabric API</h2>
-          <p class="fabric-desc">Every mod on this page runs on Fabric. Install Fabric API first, or nothing below will load.</p>
-        </div>
-        <a class="btn btn-outline fabric-cta" href="https://modrinth.com/mod/fabric-api" target="_blank" rel="noopener">
-          Get Fabric API
-        </a>
-        <div class="card-spotlight" aria-hidden="true"></div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Downloads -->
-  <section class="downloads" id="downloads">
-    <div class="section-inner">
-      <div class="downloads-head">
-        <div>
-          <p class="section-kicker">The lineup</p>
-          <h2 class="section-title">Downloads</h2>
-          <p class="section-lead">Direct downloads. No redirects, no waiting.</p>
-        </div>
-        <a href="downloads.html" class="browse-all-link">Browse all versions</a>
-      </div>
+        <h1 class="hero-title">
+          <span class="grad-text" data-split>Zenex Mods</span>
+        </h1>
 
-      <div class="card-grid">
+        <p class="hero-tagline reveal" style="--d:1">Mods you actually use — nothing you don't.</p>
 
-        <!-- Meteor Client -->
-        <article class="mod-card tilt reveal accent-meteor">
-          <div class="mod-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="16" cy="8" r="3.4" stroke="currentColor" stroke-width="1.6"/>
-              <path d="M14 10.5C11 13 7 16.5 4 19.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M15.5 12.5C13 14.5 9.5 17.5 7 20" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" opacity="0.5"/>
-            </svg>
-          </div>
-          <h3 class="mod-name">Meteor Client</h3>
-          <p class="mod-desc">The flagship download. Full feature set, actively maintained, updated every week.</p>
-          <div class="mod-meta"><span class="mc-tag">Actively maintained</span></div>
-          <div class="badge-opensource">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 6 3 12l5 6M16 6l5 6-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>Open Source</span>
-          </div>
-          <a class="mod-download mod-download-link" href="meteor-client.html">
-            <span class="btn-label">View versions</span>
+        <p class="hero-sub reveal" style="--d:2">
+          A small, direct hub for Minecraft client mods. Meteor Client, Glazed,
+          RigMaster V2 and CPVP Tweaks — straight downloads, no redirects,
+          and real support in Discord.
+        </p>
+
+        <div class="hero-actions reveal" style="--d:3">
+          <a href="#downloads" class="btn btn-primary btn-lg" data-magnetic>
+            Browse downloads
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v13M6 12l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <div class="card-spotlight" aria-hidden="true"></div>
-        </article>
-
-        <!-- Glazed -->
-        <article class="mod-card tilt reveal accent-glazed">
-          <div class="mod-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/>
-              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/>
-            </svg>
-          </div>
-          <h3 class="mod-name">Glazed</h3>
-          <p class="mod-desc">Join our Discord for the full changelog and setup notes.</p>
-          <div class="mod-meta"><span class="mc-tag">Community support</span></div>
-          <div class="badge-opensource">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 6 3 12l5 6M16 6l5 6-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>Open Source</span>
-          </div>
-          <a class="mod-download mod-download-link" href="glazed.html">
-            <span class="btn-label">View versions</span>
-          </a>
-          <div class="card-spotlight" aria-hidden="true"></div>
-        </article>
-
-        <!-- RigMaster V2 -->
-        <article class="mod-card tilt reveal accent-rigmaster">
-          <span class="mod-badge mod-badge-latest">Latest</span>
-          <div class="mod-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="3" y="6" width="8" height="12" rx="1.4" transform="rotate(-8 3 6)" stroke="currentColor" stroke-width="1.6"/>
-              <rect x="12.5" y="5" width="8" height="12" rx="1.4" transform="rotate(8 12.5 5)" stroke="currentColor" stroke-width="1.6"/>
-            </svg>
-          </div>
-          <h3 class="mod-name">RigMaster V2</h3>
-          <p class="mod-desc">Latest major version. Join our Discord for details.</p>
-          <div class="mod-meta"><span class="mc-tag">V2</span></div>
-          <button class="mod-download" data-download-url="https://zenex-download-tracker.zenex-tracker.workers.dev/api/download/rigmaster-v2" data-filename="rigmaster-v2">
-            <span class="btn-label">Download</span>
-            <span class="btn-success">Downloaded ✓</span>
-            <span class="btn-ripple" aria-hidden="true"></span>
-          </button>
-          <div class="card-spotlight" aria-hidden="true"></div>
-        </article>
-
-        <!-- CPVP Tweaks -->
-        <article class="mod-card tilt reveal accent-cpvp">
-          <div class="mod-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 3L17 9L12 21L7 9L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-              <path d="M7 9H17" stroke="currentColor" stroke-width="1.6"/>
-            </svg>
-          </div>
-          <h3 class="mod-name">CPVP Tweaks</h3>
-          <p class="mod-desc">Small quality-of-life tweaks. Join our Discord for the rundown.</p>
-          <div class="mod-meta"><span class="mc-tag">Lightweight</span></div>
-          <button class="mod-download" data-download-url="https://zenex-download-tracker.zenex-tracker.workers.dev/api/download/cpvp-tweaks" data-filename="cpvp-tweaks">
-            <span class="btn-label">Download</span>
-            <span class="btn-success">Downloaded ✓</span>
-            <span class="btn-ripple" aria-hidden="true"></span>
-          </button>
-          <div class="card-spotlight" aria-hidden="true"></div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Open source note -->
-  <section class="oss-strip">
-    <div class="section-inner">
-      <div class="oss-card reveal">
-        <span>🛠</span>
-        <span><strong>This website</strong> is an independent, open frontend for Zenex Mods — built and maintained by the Zenex team. Meteor Client and other listed mods are separate third-party projects; Zenex is not their developer and only distributes builds and community support around them.</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Discord -->
-  <section class="discord-section" id="discord">
-    <div class="section-inner">
-      <div class="discord-card tilt reveal">
-        <div class="discord-bg-glow" aria-hidden="true"></div>
-        <div class="discord-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.045-.32 13.579.099 18.057a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.128 12.3 12.3 0 0 1-1.873.891.076.076 0 0 0-.04.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/>
-          </svg>
+          <a href="#discord" class="btn btn-ghost btn-lg">Join Discord</a>
         </div>
-        <h2 class="discord-title">Join the Zenex Discord</h2>
-        <p class="discord-copy">Support, updates, and full mod details — all in one place.</p>
-        <a class="btn btn-primary" href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">
-          Join Discord
-        </a>
-        <div class="card-spotlight" aria-hidden="true"></div>
+
+        <div class="hero-trust reveal" style="--d:4">
+          <span class="hero-trust-item">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Direct downloads
+          </span>
+          <span class="hero-trust-item">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            No ad-gates
+          </span>
+          <span class="hero-trust-item">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Fabric-based
+          </span>
+          <span class="hero-trust-item">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Always free
+          </span>
+        </div>
       </div>
+
+      <!-- Mock mod-manager panel -->
+      <div class="hero-panel reveal reveal-scale" style="--d:2" aria-hidden="true">
+        <div class="panel-bar">
+          <div class="panel-dots"><i></i><i></i><i></i></div>
+          <span class="panel-title">~/.minecraft/mods</span>
+          <span class="panel-chip">Fabric</span>
+        </div>
+
+        <div class="panel-body">
+          <div class="panel-row lit" style="--row-rgb: var(--meteor-rgb)">
+            <span class="panel-ico">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="16" cy="8" r="3.4" stroke="currentColor" stroke-width="1.7"/><path d="M14 10.5C11 13 7 16.5 4 19.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M15.5 12.5C13 14.5 9.5 17.5 7 20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".5"/></svg>
+            </span>
+            <span>
+              <span class="panel-name">Meteor Client</span>
+              <span class="panel-meta">meteor-client-1.21.11.jar</span>
+            </span>
+            <span class="panel-state">Loaded</span>
+          </div>
+
+          <div class="panel-row" style="--row-rgb: var(--glazed-rgb)">
+            <span class="panel-ico">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/></svg>
+            </span>
+            <span>
+              <span class="panel-name">Glazed</span>
+              <span class="panel-meta">glazed-1.21.11.jar</span>
+            </span>
+            <span class="panel-state">Loaded</span>
+          </div>
+
+          <div class="panel-row" style="--row-rgb: var(--rigmaster-rgb)">
+            <span class="panel-ico">
+              <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="8" height="12" rx="1.4" transform="rotate(-8 3 6)" stroke="currentColor" stroke-width="1.7"/><rect x="12.5" y="5" width="8" height="12" rx="1.4" transform="rotate(8 12.5 5)" stroke="currentColor" stroke-width="1.7"/></svg>
+            </span>
+            <span>
+              <span class="panel-name">RigMaster V2</span>
+              <span class="panel-meta">rigmaster-v2.jar</span>
+            </span>
+            <span class="panel-state">Loaded</span>
+          </div>
+
+          <div class="panel-row" style="--row-rgb: var(--cpvp-rgb)">
+            <span class="panel-ico">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3 17 9 12 21 7 9 12 3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M7 9h10" stroke="currentColor" stroke-width="1.7"/></svg>
+            </span>
+            <span>
+              <span class="panel-name">CPVP Tweaks</span>
+              <span class="panel-meta">cpvp-tweaks.jar</span>
+            </span>
+            <span class="panel-state">Loaded</span>
+          </div>
+        </div>
+
+        <div class="panel-foot">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>Fabric API</b> detected — all mods ready</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════ TICKER ══════════════ -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item">Meteor Client</span>
+      <span class="ticker-item">Glazed</span>
+      <span class="ticker-item">RigMaster V2</span>
+      <span class="ticker-item">CPVP Tweaks</span>
+      <span class="ticker-item">Fabric Ready</span>
+      <span class="ticker-item">Direct Downloads</span>
+      <span class="ticker-item">No Redirects</span>
+      <span class="ticker-item">Open Source</span>
+      <span class="ticker-item">Updated Weekly</span>
+      <span class="ticker-item">Always Free</span>
+    </div>
+  </div>
+
+  <!-- ══════════════ STATS ══════════════ -->
+  <section class="section-tight shell">
+    <div class="stats-grid" data-stagger>
+      <div class="stat reveal">
+        <div class="stat-num"><span data-count="4">0</span></div>
+        <div class="stat-label">Mods distributed</div>
+        <div class="stat-note">Meteor · Glazed · RigMaster · CPVP</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-num"><span data-count="8">0</span></div>
+        <div class="stat-label">Downloadable builds</div>
+        <div class="stat-note">Across every supported version</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-num"><span data-count="0">0</span></div>
+        <div class="stat-label">Redirects or ad-gates</div>
+        <div class="stat-note">Straight from the source</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-num"><span data-count="100" data-suffix="%">0</span></div>
+        <div class="stat-label">Free, always</div>
+        <div class="stat-note">No paywalls, no keys</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ FABRIC API ══════════════ -->
+  <section class="section-tight shell" id="fabric">
+    <div class="fabric-card surface tilt reveal">
+      <div class="spotlight" aria-hidden="true"></div>
+
+      <div class="fabric-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <rect x="2.6" y="9" width="3.4" height="6" rx="1.7" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="18" y="9" width="3.4" height="6" rx="1.7" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M6 9.6h12v4.8H6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M9 11.6h6M9 12.8h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="fabric-copy">
+        <span class="fabric-tag">Required dependency</span>
+        <h2 class="fabric-title">Fabric API</h2>
+        <p class="fabric-desc">Every mod on this site runs on Fabric. Install Fabric API first — without it, nothing below will load.</p>
+      </div>
+
+      <a class="btn btn-outline" href="https://modrinth.com/mod/fabric-api" target="_blank" rel="noopener">
+        Get Fabric API
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════ FEATURED SPOTLIGHT ══════════════ -->
+  <section class="section shell">
+    <div class="spotlight-card surface accent-meteor reveal">
+      <div class="spotlight" aria-hidden="true"></div>
+
+      <div class="spot-copy">
+        <span class="spot-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" style="width:13px;height:13px" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          Flagship download
+        </span>
+        <h2 class="spot-title">Meteor Client</h2>
+        <p class="spot-desc">
+          The most complete mod on Zenex, and the one we update most. Full feature set,
+          multiple Minecraft builds, and an active changelog in Discord.
+        </p>
+
+        <div class="spot-features">
+          <div class="spot-feature">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><b>Three live builds</b> — 1.21.11, 26.1.2 and legacy 1.21.4</span>
+          </div>
+          <div class="spot-feature">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><b>Open source</b> — nothing hidden, nothing obfuscated</span>
+          </div>
+          <div class="spot-feature">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><b>Pairs with Glazed</b> — install both for the intended setup</span>
+          </div>
+        </div>
+
+        <div class="spot-actions">
+          <a href="meteor-client.html" class="btn btn-primary" data-magnetic>
+            View all versions
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="tutorials.html" class="btn btn-ghost">Install guide</a>
+        </div>
+      </div>
+
+      <div class="spot-visual" aria-hidden="true">
+        <div class="orb-glow"></div>
+        <div class="orb-ring r2"></div>
+        <div class="orb-ring r1"><i></i></div>
+        <div class="orb-ring r3"><i></i></div>
+        <div class="orb-core">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="16" cy="8" r="3.4" stroke="currentColor" stroke-width="1.6"/><path d="M14 10.5C11 13 7 16.5 4 19.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M15.5 12.5C13 14.5 9.5 17.5 7 20" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" opacity=".55"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ DOWNLOADS ══════════════ -->
+  <section class="section shell" id="downloads">
+    <div class="section-head-row">
+      <div class="section-head reveal">
+        <span class="kicker">The lineup</span>
+        <h2 class="h-section">Downloads</h2>
+        <p class="lead">Four mods, direct from the source. Pick one, grab the build that matches your game, and you're done.</p>
+      </div>
+      <a href="downloads.html" class="link-arrow reveal" style="--d:1">
+        Browse all versions
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <div class="mod-grid" data-stagger>
+
+      <!-- Meteor Client -->
+      <article class="mod-card surface tilt reveal accent-meteor">
+        <div class="spotlight" aria-hidden="true"></div>
+        <div class="mod-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="16" cy="8" r="3.4" stroke="currentColor" stroke-width="1.6"/><path d="M14 10.5C11 13 7 16.5 4 19.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M15.5 12.5C13 14.5 9.5 17.5 7 20" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" opacity=".5"/></svg>
+        </div>
+        <h3 class="mod-name">Meteor Client</h3>
+        <p class="mod-desc">The flagship download. Full feature set, actively maintained, updated every week.</p>
+        <div class="tag-row">
+          <span class="tag tag-accent">Actively maintained</span>
+          <span class="tag tag-oss">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 6 3 12l5 6M16 6l5 6-5 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Open source
+          </span>
+        </div>
+        <a class="mod-download mod-download-link" href="meteor-client.html">
+          <span class="btn-label">View versions</span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" style="transform:none"><path d="M5 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+
+      <!-- Glazed -->
+      <article class="mod-card surface tilt reveal accent-glazed">
+        <div class="spotlight" aria-hidden="true"></div>
+        <div class="mod-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/></svg>
+        </div>
+        <h3 class="mod-name">Glazed</h3>
+        <p class="mod-desc">Built to run alongside Meteor Client. Full changelog and setup notes live in Discord.</p>
+        <div class="tag-row">
+          <span class="tag tag-accent">Community support</span>
+          <span class="tag tag-oss">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 6 3 12l5 6M16 6l5 6-5 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Open source
+          </span>
+        </div>
+        <a class="mod-download mod-download-link" href="glazed.html">
+          <span class="btn-label">View versions</span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" style="transform:none"><path d="M5 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+
+      <!-- RigMaster V2 -->
+      <article class="mod-card surface tilt reveal accent-rigmaster">
+        <div class="spotlight" aria-hidden="true"></div>
+        <span class="mod-badge">Latest</span>
+        <div class="mod-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="8" height="12" rx="1.4" transform="rotate(-8 3 6)" stroke="currentColor" stroke-width="1.6"/><rect x="12.5" y="5" width="8" height="12" rx="1.4" transform="rotate(8 12.5 5)" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <h3 class="mod-name">RigMaster V2</h3>
+        <p class="mod-desc">The latest major version. Join our Discord for the full breakdown and changelog.</p>
+        <div class="tag-row">
+          <span class="tag tag-accent">V2</span>
+          <span class="tag">Fabric API required</span>
+        </div>
+        <button class="mod-download"
+                data-download-url="https://zenex-download-tracker.zenex-tracker.workers.dev/api/download/rigmaster-v2"
+                data-filename="rigmaster-v2"
+                data-mod-name="RigMaster V2">
+          <span class="btn-label">Download</span>
+          <span class="btn-success">Downloaded
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v13M6 12l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="btn-ripple" aria-hidden="true"></span>
+        </button>
+      </article>
+
+      <!-- CPVP Tweaks -->
+      <article class="mod-card surface tilt reveal accent-cpvp">
+        <div class="spotlight" aria-hidden="true"></div>
+        <div class="mod-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3 17 9 12 21 7 9 12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 9h10" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <h3 class="mod-name">CPVP Tweaks</h3>
+        <p class="mod-desc">Small quality-of-life tweaks that stay out of your way. Rundown posted in Discord.</p>
+        <div class="tag-row">
+          <span class="tag tag-accent">Lightweight</span>
+          <span class="tag">Fabric API required</span>
+        </div>
+        <button class="mod-download"
+                data-download-url="https://zenex-download-tracker.zenex-tracker.workers.dev/api/download/cpvp-tweaks"
+                data-filename="cpvp-tweaks"
+                data-mod-name="CPVP Tweaks">
+          <span class="btn-label">Download</span>
+          <span class="btn-success">Downloaded
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v13M6 12l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="btn-ripple" aria-hidden="true"></span>
+        </button>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ══════════════ QUICK START ══════════════ -->
+  <section class="section-tight shell">
+    <div class="section-head-row">
+      <div class="section-head reveal">
+        <span class="kicker">Quick start</span>
+        <h2 class="h-section">Installed in three steps</h2>
+        <p class="lead">Same process for every mod here. If you've dropped a file into a folder before, you already know how.</p>
+      </div>
+      <a href="tutorials.html" class="link-arrow reveal" style="--d:1">
+        Full install guide
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <div class="qs-grid" data-stagger>
+      <div class="qs-card surface reveal">
+        <div class="spotlight" aria-hidden="true"></div>
+        <div class="qs-num">01</div>
+        <h3>Get Fabric API</h3>
+        <p>Install <a href="https://modrinth.com/mod/fabric-api" target="_blank" rel="noopener" style="color:var(--violet-soft)">Fabric API</a> first — it's the loader every mod here depends on.</p>
+      </div>
+      <div class="qs-card surface reveal">
+        <div class="spotlight" aria-hidden="true"></div>
+        <div class="qs-num">02</div>
+        <h3>Download the .jar</h3>
+        <p>Pick your mod and the build that matches your Minecraft version. One click, no waiting room.</p>
+      </div>
+      <div class="qs-card surface reveal">
+        <div class="spotlight" aria-hidden="true"></div>
+        <div class="qs-num">03</div>
+        <h3>Drop it in <code>mods</code></h3>
+        <p>Move the file into your <code>mods</code> folder and launch with the Fabric profile. That's it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ DISCLAIMER ══════════════ -->
+  <section class="section-tight shell">
+    <div class="note-strip reveal">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="8" r="1" fill="currentColor"/></svg>
+      <span>
+        <strong>This website</strong> is an independent, open frontend for Zenex Mods — built and maintained by the Zenex team.
+        Meteor Client and other listed mods are separate third-party projects; Zenex is not their developer and only distributes
+        builds and community support around them. See the <a href="terms.html">Terms</a> for the full picture.
+      </span>
+    </div>
+  </section>
+
+  <!-- ══════════════ COMMUNITY ══════════════ -->
+  <section class="section shell" id="discord">
+    <div class="community-card surface tilt reveal">
+      <div class="community-glow" aria-hidden="true"></div>
+      <div class="spotlight" aria-hidden="true"></div>
+
+      <div class="community-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.045-.32 13.579.099 18.057a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.128 12.3 12.3 0 0 1-1.873.891.076.076 0 0 0-.04.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/></svg>
+      </div>
+
+      <h2 class="community-title">Join the Zenex Discord</h2>
+      <p class="community-copy">Support, update pings, and the full detail on every mod — changelogs, setup notes and rundowns all live there.</p>
+
+      <div class="community-perks">
+        <span class="perk">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+          Update pings
+        </span>
+        <span class="perk">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3h7l4 4v14H7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v4h4" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          Full changelogs
+        </span>
+        <span class="perk">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          Setup help
+        </span>
+        <span class="perk">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M3 20a6 6 0 0 1 12 0M16.5 5.2a3.2 3.2 0 0 1 0 5.6M18 20a6 6 0 0 0-2.5-4.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          The community
+        </span>
+      </div>
+
+      <a class="btn btn-primary btn-lg" href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener" data-magnetic>
+        Join Discord
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
   </section>
 
 </main>
 
-<!-- Footer -->
+<!-- ══ Footer ══ -->
 <footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <span class="brand-name">Zenex<span class="accent">Mods</span></span>
-      <p>Minecraft client mods, done cleanly.</p>
+  <div class="shell">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#home" class="brand">
+          <span class="brand-mark">Z</span>
+          <span class="brand-name">Zenex<span class="accent">Mods</span></span>
+        </a>
+        <p>Minecraft client mods, done cleanly. Direct downloads, honest docs, and a Discord that actually answers.</p>
+        <div class="footer-socials">
+          <a class="social-btn" href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener" aria-label="Discord">
+            <svg viewBox="0 0 24 24"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.045-.32 13.579.099 18.057a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.128 12.3 12.3 0 0 1-1.873.891.076.076 0 0 0-.04.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/></svg>
+          </a>
+          <a class="social-btn" href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.12-2.13C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.52A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.13c1.88.52 9.38.52 9.38.52s7.5 0 9.38-.52a3 3 0 0 0 2.12-2.13A31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8ZM9.55 15.57V8.43L15.82 12Z"/></svg>
+          </a>
+          <a class="social-btn" href="https://modrinth.com/mod/fabric-api" target="_blank" rel="noopener" aria-label="Fabric API on Modrinth">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 18V7l4 5 4-5 4 5 4-5v11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Mods</h4>
+        <a href="meteor-client.html">Meteor Client</a>
+        <a href="glazed.html">Glazed</a>
+        <a href="downloads.html">RigMaster V2</a>
+        <a href="downloads.html">CPVP Tweaks</a>
+        <a href="downloads.html">All downloads</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Help</h4>
+        <a href="tutorials.html">Install guide</a>
+        <a href="faq.html">FAQ</a>
+        <a href="#fabric">Fabric API</a>
+        <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Get support</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Zenex</h4>
+        <a href="#home">Home</a>
+        <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Discord</a>
+        <a href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener">YouTube</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
     </div>
 
-    <div class="footer-links">
-      <h3>Quick links</h3>
-      <a href="#home">Home</a>
-      <a href="#downloads">Downloads</a>
-      <a href="downloads.html">All versions</a>
-      <a href="#fabric">Fabric API</a>
-      <a href="tutorials.html">Tutorials</a>
-      <a href="faq.html">FAQ</a>
-      <a href="terms.html">Terms</a>
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> Zenex Mods. All rights reserved.</p>
+      <p>Not affiliated with Mojang Studios or Microsoft.</p>
     </div>
-
-    <div class="footer-social">
-      <h3>Community</h3>
-      <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Discord</a>
-      <a href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener">YouTube</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>&copy; <span id="year"></span> Zenex Mods. All rights reserved.</p>
   </div>
 </footer>
 
-<!-- Download toast -->
-<div class="toast" id="download-toast" role="status" aria-live="polite">
-  <span class="toast-dot"></span>
+<!-- ══ Toast + back to top ══ -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v13M6 12l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
   <span id="toast-text">Download started</span>
 </div>
+
+<button class="to-top" id="to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 20V7M6 12l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
 
 <script src="script.js"></script>
 </body>

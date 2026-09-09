@@ -4,13 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tutorials — Zenex Mods</title>
-<meta name="description" content="How to install Zenex Mods: download the .jar, drop it into your mods folder, and launch with Fabric. Recommended: the Modrinth App.">
-<meta name="theme-color" content="#ff6a2b">
+<meta name="description" content="How to install Zenex Mods: download the .jar, drop it into your mods folder, and launch with Fabric. Recommended launcher: the Modrinth App.">
+<meta name="theme-color" content="#7b61ff">
 <link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<noscript>
+  <!-- Without JS the reveal animations never fire, so make everything visible. -->
+  <style>
+    .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
+    .word { opacity: 1 !important; transform: none !important; }
+    .loader { display: none !important; }
+    .faq-a { grid-template-rows: 1fr !important; }
+  </style>
+</noscript>
 </head>
 <body>
 
@@ -23,15 +33,16 @@
 </div>
 
 <a class="skip-link" href="#main">Skip to content</a>
-<div class="scroll-progress" id="scroll-progress" aria-hidden="true"><span id="scroll-progress-fill"></span></div>
+<div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-fill"></span></div>
 <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
 <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 
-<div class="bg-field" aria-hidden="true">
-  <canvas id="field-canvas"></canvas>
-  <div class="bg-noise"></div>
-  <div class="glow-blob glow-ember" id="blob-1"></div>
-  <div class="glow-blob glow-verdigris" id="blob-2"></div>
+<div class="backdrop" aria-hidden="true">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas id="spark-canvas"></canvas>
+  <div class="bg-grid"></div>
+  <div class="bg-grain"></div>
+  <div class="bg-vignette"></div>
 </div>
 
 <header class="navbar" id="navbar">
@@ -50,7 +61,7 @@
       <a href="terms.html">Terms</a>
       <a href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener">YouTube</a>
     </nav>
-    <a href="downloads.html" class="nav-cta btn btn-primary">Get Mods</a>
+    <a href="downloads.html" class="nav-cta btn btn-primary btn-sm">Get Mods</a>
     <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
       <span></span><span></span><span></span>
     </button>
@@ -59,160 +70,166 @@
 
 <main id="main">
 
-  <section class="page-header">
-    <div class="section-inner">
-      <p class="section-kicker reveal">Get set up</p>
-      <h1 class="section-title reveal">Tutorials</h1>
-      <p class="section-lead reveal">A quick, no-nonsense walkthrough for getting any Zenex mod installed and running — start to finish.</p>
+  <section class="page-head shell">
+    <nav class="crumbs reveal" aria-label="Breadcrumb">
+      <a href="index.html#home">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Tutorials</span>
+    </nav>
+
+    <span class="kicker reveal">Get set up</span>
+    <h1 class="h-display reveal" style="--d:1">Tutorials</h1>
+    <p class="lead reveal" style="--d:2">A quick, no-nonsense walkthrough for getting any Zenex mod installed and running — start to finish.</p>
+  </section>
+
+  <!-- ══ Modrinth App recommendation ══ -->
+  <section class="section-tight shell" style="padding-top:8px">
+    <div class="modrinth-card surface tilt reveal">
+      <div class="spotlight" aria-hidden="true"></div>
+
+      <a class="modrinth-icon" href="https://modrinth.com/app" target="_blank" rel="noopener" aria-label="Modrinth App">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 18V7l4 5 4-5 4 5 4-5v11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <div>
+        <span class="fabric-tag" style="color:var(--modrinth-soft);background:rgba(var(--modrinth-rgb),.1);border-color:rgba(var(--modrinth-rgb),.3)">Recommended launcher</span>
+        <h2 class="modrinth-title">Use the Modrinth App</h2>
+        <p class="modrinth-desc">
+          Our strong recommendation for running Zenex mods is the <strong>Modrinth App</strong>. It manages your Fabric
+          install, your mods folder, and your instances for you — the easiest and most reliable way to get everything
+          below running without fighting folders manually.
+        </p>
+      </div>
+
+      <a class="btn btn-modrinth" href="https://modrinth.com/app" target="_blank" rel="noopener">
+        Get Modrinth App
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
   </section>
 
-  <!-- Modrinth App recommendation -->
-  <section class="modrinth-section">
-    <div class="section-inner">
-      <div class="modrinth-card tilt reveal">
-        <a class="modrinth-icon-link" href="https://modrinth.com/app" target="_blank" rel="noopener" aria-label="Modrinth App">
-          <div class="modrinth-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 18V7l4 5 4-5 4 5 4-5v11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- ══ Step-by-step guide ══ -->
+  <section class="section shell">
+    <div class="section-head reveal">
+      <span class="kicker">Installation guide</span>
+      <h2 class="h-section">Four steps, start to finish</h2>
+      <p class="lead">Works the same way for every mod on Zenex — Meteor Client, Glazed, RigMaster V2 and CPVP Tweaks.</p>
+    </div>
+
+    <div class="steps-rail">
+
+      <div class="step-item reveal">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Download the .jar file</h3>
+          <p>Head to the <a href="downloads.html">Downloads</a> page, pick your mod and version, and download the <code>.jar</code> file straight to your computer.</p>
+        </div>
+      </div>
+
+      <div class="step-item reveal">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Open your Minecraft mods folder</h3>
+          <p>If you're using the Modrinth App, it opens this for you automatically per-instance. Doing it manually? Open <code>%appdata%/.minecraft/mods</code> on Windows or <code>~/Library/Application Support/minecraft/mods</code> on Mac — create the <code>mods</code> folder if it isn't there yet.</p>
+        </div>
+      </div>
+
+      <div class="step-item reveal">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Drag and drop the .jar in</h3>
+          <p>Move the downloaded <code>.jar</code> file from your Downloads folder straight into the <code>mods</code> folder. No extraction, no installer — just drop it in.</p>
+        </div>
+      </div>
+
+      <div class="step-item reveal">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Launch with Fabric</h3>
+          <p>Make sure <a href="index.html#fabric">Fabric API</a> is installed, then launch Minecraft using the Fabric profile. The mod loads and enables itself automatically — no extra setup needed.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ Animated visual walkthrough ══ -->
+  <section class="section shell" style="padding-top:0">
+    <div class="section-head reveal">
+      <span class="kicker">See it in action</span>
+      <h2 class="h-section">What each step looks like</h2>
+      <p class="lead">A quick visual preview of the download, drop, and install flow.</p>
+    </div>
+
+    <div class="demo-grid" data-stagger>
+
+      <div class="demo-panel surface reveal">
+        <div class="spotlight" aria-hidden="true"></div>
+        <p class="demo-step">Step 1</p>
+        <h3>Downloading the mod</h3>
+        <div class="demo-stage" aria-hidden="true">
+          <div class="demo-file">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v14H7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3v4h4" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            <span>MeteorClient.jar</span>
+          </div>
+          <svg class="demo-arrow" viewBox="0 0 24 24" fill="none"><path d="M12 4v13M6 12l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="demo-track"><span class="demo-fill"></span></div>
+        </div>
+      </div>
+
+      <div class="demo-panel surface reveal">
+        <div class="spotlight" aria-hidden="true"></div>
+        <p class="demo-step">Step 2–3</p>
+        <h3>Dropping it into mods</h3>
+        <div class="demo-stage" aria-hidden="true">
+          <div class="demo-dnd">
+            <div class="demo-folder">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              <span>Downloads</span>
+            </div>
+            <div class="demo-path">
+              <div class="demo-drag">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v14H7Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M14 3v4h4" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+                <span class="demo-cursor"></span>
+              </div>
+            </div>
+            <div class="demo-folder demo-folder-to">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              <span>mods</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-panel surface reveal">
+        <div class="spotlight" aria-hidden="true"></div>
+        <p class="demo-step">Step 4</p>
+        <h3>Enabling on launch</h3>
+        <div class="demo-stage" aria-hidden="true">
+          <div class="demo-check-wrap">
+            <div class="demo-spinner"></div>
+            <svg class="demo-check" viewBox="0 0 24 24" fill="none">
+              <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-        </a>
-        <div class="modrinth-copy">
-          <span class="modrinth-badge">Recommended launcher</span>
-          <h2 class="modrinth-title">Use the Modrinth App</h2>
-          <p class="modrinth-desc">Our strong recommendation for running Zenex mods is the <strong>Modrinth App</strong>. It manages your Fabric install, your mods folder, and your instances for you — it's the easiest and most reliable way to get everything below running without fighting folders manually.</p>
+          <div class="demo-toggle"><span class="demo-knob"></span></div>
+          <span class="demo-label">Mod enabled</span>
         </div>
-        <a class="btn btn-modrinth" href="https://modrinth.com/app" target="_blank" rel="noopener">
-          Get Modrinth App
-        </a>
-        <div class="card-spotlight" aria-hidden="true"></div>
       </div>
+
     </div>
-  </section>
 
-  <!-- Step-by-step guide -->
-  <section class="install-steps">
-    <div class="section-inner">
-      <p class="section-kicker reveal">Installation guide</p>
-      <h2 class="section-title reveal">Four steps, start to finish</h2>
-      <p class="section-lead reveal">Works the same way for every mod on Zenex — Meteor Client, Glazed, RigMaster V2, and CPVP Tweaks.</p>
-
-      <div class="steps-rail">
-
-        <div class="step-item reveal">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h3>Download the .jar file</h3>
-            <p>Head to the <a href="downloads.html">Downloads</a> page, pick your mod and version, and download the <code>.jar</code> file straight to your computer.</p>
-          </div>
-        </div>
-
-        <div class="step-item reveal">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h3>Open your Minecraft mods folder</h3>
-            <p>If you're using the Modrinth App, it opens this for you automatically per-instance. Doing it manually? Open the Minecraft <code>%appdata%/.minecraft/mods</code> folder (Windows) or <code>~/Library/Application Support/minecraft/mods</code> (Mac) — create the <code>mods</code> folder if it isn't there yet.</p>
-          </div>
-        </div>
-
-        <div class="step-item reveal">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <h3>Drag and drop the .jar in</h3>
-            <p>Move the downloaded <code>.jar</code> file from your Downloads folder straight into the <code>mods</code> folder. No extraction, no installer — just drop it in.</p>
-          </div>
-        </div>
-
-        <div class="step-item reveal">
-          <div class="step-num">4</div>
-          <div class="step-body">
-            <h3>Launch with Fabric</h3>
-            <p>Make sure <a href="index.html#fabric">Fabric API</a> is installed, then launch Minecraft using the Fabric profile. The mod loads and enables itself automatically — no extra setup needed.</p>
-          </div>
-        </div>
-
+    <div class="mini-cta surface reveal">
+      <div class="spotlight" aria-hidden="true"></div>
+      <div>
+        <h3>Stuck somewhere?</h3>
+        <p>The FAQ covers the common snags. Anything else, ask in Discord — someone will get you sorted.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- Animated visual walkthrough -->
-  <section class="tut-showcase">
-    <div class="section-inner">
-      <p class="section-kicker reveal">See it in action</p>
-      <h2 class="section-title reveal">What each step looks like</h2>
-      <p class="section-lead reveal">A quick visual preview of the download, drop, and install flow.</p>
-
-      <div class="tut-showcase-grid">
-
-        <!-- Panel 1: Download -->
-        <div class="tut-panel reveal">
-          <p class="tut-panel-num">Step 1</p>
-          <h3>Downloading the mod</h3>
-          <div class="tut-stage">
-            <div class="tut-file">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 3h7l4 4v14H7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                <path d="M14 3v4h4" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-              </svg>
-              <span>MeteorClient.jar</span>
-            </div>
-            <svg class="tut-arrow-down" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M12 4v13M6 12l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div class="tut-progress-track">
-              <span class="tut-progress-fill"></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Panel 2: Drag and drop -->
-        <div class="tut-panel reveal">
-          <p class="tut-panel-num">Step 2–3</p>
-          <h3>Dropping it into mods</h3>
-          <div class="tut-stage">
-            <div class="tut-dragdrop">
-              <div class="tut-folder tut-folder-from">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                </svg>
-                <span>Downloads</span>
-              </div>
-              <div class="tut-track">
-                <div class="tut-drag-group" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 3h7l4 4v14H7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                    <path d="M14 3v4h4" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                  </svg>
-                  <span class="tut-cursor-dot"></span>
-                </div>
-              </div>
-              <div class="tut-folder tut-folder-to">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                </svg>
-                <span>mods</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Panel 3: Install / enable -->
-        <div class="tut-panel reveal">
-          <p class="tut-panel-num">Step 4</p>
-          <h3>Enabling on launch</h3>
-          <div class="tut-stage tut-install">
-            <div class="tut-check-wrap">
-              <div class="tut-spinner" aria-hidden="true"></div>
-              <svg class="tut-check" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path class="tut-check-path" d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="tut-toggle" aria-hidden="true"><span class="tut-toggle-knob"></span></div>
-            <span class="tut-install-label">Mod enabled</span>
-          </div>
-        </div>
-
+      <div style="display:flex;gap:11px;flex-wrap:wrap">
+        <a href="faq.html" class="btn btn-ghost">Read the FAQ</a>
+        <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener" class="btn btn-primary">Ask in Discord</a>
       </div>
     </div>
   </section>
@@ -220,29 +237,63 @@
 </main>
 
 <footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <span class="brand-name">Zenex<span class="accent">Mods</span></span>
-      <p>Minecraft client mods, done cleanly.</p>
+  <div class="shell">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html#home" class="brand">
+          <span class="brand-mark">Z</span>
+          <span class="brand-name">Zenex<span class="accent">Mods</span></span>
+        </a>
+        <p>Minecraft client mods, done cleanly. Direct downloads, honest docs, and a Discord that actually answers.</p>
+        <div class="footer-socials">
+          <a class="social-btn" href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener" aria-label="Discord">
+            <svg viewBox="0 0 24 24"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.045-.32 13.579.099 18.057a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.128 12.3 12.3 0 0 1-1.873.891.076.076 0 0 0-.04.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/></svg>
+          </a>
+          <a class="social-btn" href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.12-2.13C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.52A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.13c1.88.52 9.38.52 9.38.52s7.5 0 9.38-.52a3 3 0 0 0 2.12-2.13A31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8ZM9.55 15.57V8.43L15.82 12Z"/></svg>
+          </a>
+          <a class="social-btn" href="https://modrinth.com/mod/fabric-api" target="_blank" rel="noopener" aria-label="Fabric API on Modrinth">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 18V7l4 5 4-5 4 5 4-5v11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Mods</h4>
+        <a href="meteor-client.html">Meteor Client</a>
+        <a href="glazed.html">Glazed</a>
+        <a href="downloads.html">RigMaster V2</a>
+        <a href="downloads.html">CPVP Tweaks</a>
+        <a href="downloads.html">All downloads</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Help</h4>
+        <a href="tutorials.html">Install guide</a>
+        <a href="faq.html">FAQ</a>
+        <a href="index.html#fabric">Fabric API</a>
+        <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Get support</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Zenex</h4>
+        <a href="index.html#home">Home</a>
+        <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Discord</a>
+        <a href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener">YouTube</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
     </div>
-    <div class="footer-links">
-      <h3>Quick links</h3>
-      <a href="index.html#home">Home</a>
-      <a href="downloads.html">Downloads</a>
-      <a href="tutorials.html">Tutorials</a>
-      <a href="faq.html">FAQ</a>
-      <a href="terms.html">Terms</a>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> Zenex Mods. All rights reserved.</p>
+      <p>Not affiliated with Mojang Studios or Microsoft.</p>
     </div>
-    <div class="footer-social">
-      <h3>Community</h3>
-      <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Discord</a>
-      <a href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener">YouTube</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>&copy; <span id="year"></span> Zenex Mods. All rights reserved.</p>
   </div>
 </footer>
+
+<button class="to-top" id="to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 20V7M6 12l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
 
 <script src="script.js"></script>
 </body>

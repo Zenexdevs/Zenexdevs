@@ -5,12 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Terms of Service — Zenex Mods</title>
 <meta name="description" content="Terms of Service for Zenex Mods.">
-<meta name="theme-color" content="#ff6a2b">
+<meta name="theme-color" content="#7b61ff">
 <link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<noscript>
+  <!-- Without JS the reveal animations never fire, so make everything visible. -->
+  <style>
+    .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
+    .word { opacity: 1 !important; transform: none !important; }
+    .loader { display: none !important; }
+    .faq-a { grid-template-rows: 1fr !important; }
+  </style>
+</noscript>
 </head>
 <body>
 
@@ -23,15 +33,16 @@
 </div>
 
 <a class="skip-link" href="#main">Skip to content</a>
-<div class="scroll-progress" id="scroll-progress" aria-hidden="true"><span id="scroll-progress-fill"></span></div>
+<div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-fill"></span></div>
 <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
 <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 
-<div class="bg-field" aria-hidden="true">
-  <canvas id="field-canvas"></canvas>
-  <div class="bg-noise"></div>
-  <div class="glow-blob glow-ember" id="blob-1"></div>
-  <div class="glow-blob glow-verdigris" id="blob-2"></div>
+<div class="backdrop" aria-hidden="true">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas id="spark-canvas"></canvas>
+  <div class="bg-grid"></div>
+  <div class="bg-grain"></div>
+  <div class="bg-vignette"></div>
 </div>
 
 <header class="navbar" id="navbar">
@@ -50,7 +61,7 @@
       <a href="terms.html" class="active">Terms</a>
       <a href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener">YouTube</a>
     </nav>
-    <a href="downloads.html" class="nav-cta btn btn-primary">Get Mods</a>
+    <a href="downloads.html" class="nav-cta btn btn-primary btn-sm">Get Mods</a>
     <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
       <span></span><span></span><span></span>
     </button>
@@ -59,97 +70,142 @@
 
 <main id="main">
 
-  <section class="page-header">
-    <div class="section-inner">
-      <p class="section-kicker reveal">Legal</p>
-      <h1 class="section-title reveal">Terms of Service</h1>
-    </div>
+  <section class="page-head shell">
+    <nav class="crumbs reveal" aria-label="Breadcrumb">
+      <a href="index.html#home">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Terms of Service</span>
+    </nav>
+
+    <span class="kicker reveal">Legal</span>
+    <h1 class="h-display reveal" style="--d:1">Terms of Service</h1>
+    <p class="lead reveal" style="--d:2">The short version: this is an independent fan project, the downloads are free, and how you use them is on you.</p>
   </section>
 
-  <section class="downloads" style="padding-top:0;">
-    <div class="section-inner">
-      <div class="terms-layout">
+  <section class="section shell" style="padding-top:clamp(18px,3vw,30px)">
+    <div class="terms-layout">
 
-        <nav class="terms-nav" aria-label="Terms sections">
-          <a href="#acceptance">Acceptance of terms</a>
-          <a href="#service">The service</a>
-          <a href="#third-party">Third-party software</a>
-          <a href="#responsibility">Your responsibility</a>
-          <a href="#availability">Availability</a>
-          <a href="#changes">Changes to these terms</a>
-          <a href="#contact">Contact</a>
-        </nav>
+      <nav class="terms-nav reveal" aria-label="Terms sections">
+        <a href="#acceptance">Acceptance of terms</a>
+        <a href="#service">The service</a>
+        <a href="#third-party">Third-party software</a>
+        <a href="#responsibility">Your responsibility</a>
+        <a href="#availability">Availability</a>
+        <a href="#changes">Changes to these terms</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
-        <div class="terms-body">
+      <div class="terms-body">
+        <p class="terms-updated">Last updated: <span id="year-inline"></span></p>
 
-          <section id="acceptance" class="reveal">
-            <h2>1. Acceptance of terms</h2>
-            <p>By accessing or using the Zenex Mods website, you agree to these Terms of Service. If you don't agree with any part of these terms, please don't use the site.</p>
-          </section>
+        <section id="acceptance" class="reveal">
+          <h2><span>01</span> Acceptance of terms</h2>
+          <p>By accessing or using the Zenex Mods website, you agree to these Terms of Service. If you don't agree with any part of these terms, please don't use the site.</p>
+        </section>
 
-          <section id="service" class="reveal">
-            <h2>2. The service</h2>
-            <p>Zenex Mods is a website that provides links to download Minecraft client mods, including Meteor Client, Glazed, RigMaster V2, and CPVP Tweaks. Zenex provides the site and download links as-is; support, changelogs, and setup notes are provided through the Zenex Discord.</p>
-          </section>
+        <section id="service" class="reveal">
+          <h2><span>02</span> The service</h2>
+          <p>Zenex Mods is a website that provides links to download Minecraft client mods, including Meteor Client, Glazed, RigMaster V2 and CPVP Tweaks. Zenex provides the site and download links as-is; support, changelogs and setup notes are provided through the Zenex Discord.</p>
+        </section>
 
-          <section id="third-party" class="reveal">
-            <h2>3. Third-party software</h2>
-            <p>Some mods listed on this site are developed and maintained by third parties. Zenex does not claim ownership or authorship of third-party mods and only provides distribution and community support around them. Use of any mod is subject to that mod's own license and to any rules set by the Minecraft servers or environments you use it in.</p>
-            <p>Minecraft is a trademark of Mojang Studios / Microsoft. Zenex Mods is an independent project and is not affiliated with, endorsed by, or sponsored by Mojang or Microsoft.</p>
-          </section>
+        <section id="third-party" class="reveal">
+          <h2><span>03</span> Third-party software</h2>
+          <p>Some mods listed on this site are developed and maintained by third parties. Zenex does not claim ownership or authorship of third-party mods and only provides distribution and community support around them. Use of any mod is subject to that mod's own license and to any rules set by the Minecraft servers or environments you use it in.</p>
+          <p>Minecraft is a trademark of Mojang Studios / Microsoft. Zenex Mods is an independent project and is not affiliated with, endorsed by, or sponsored by Mojang or Microsoft.</p>
+        </section>
 
-          <section id="responsibility" class="reveal">
-            <h2>4. Your responsibility</h2>
-            <p>You are responsible for how you use any mod downloaded from this site, including compliance with the rules of any server, platform, or game mode you use it on. Zenex is not responsible for consequences arising from that use, including but not limited to server bans or account actions taken by third parties.</p>
-          </section>
+        <section id="responsibility" class="reveal">
+          <h2><span>04</span> Your responsibility</h2>
+          <p>You are responsible for how you use any mod downloaded from this site, including compliance with the rules of any server, platform or game mode you use it on. Zenex is not responsible for consequences arising from that use, including but not limited to server bans or account actions taken by third parties.</p>
+        </section>
 
-          <section id="availability" class="reveal">
-            <h2>5. Availability</h2>
-            <p>Downloads, versions, and features may change, be updated, or be removed at any time without notice. Zenex does not guarantee uninterrupted availability of the site or any download link.</p>
-          </section>
+        <section id="availability" class="reveal">
+          <h2><span>05</span> Availability</h2>
+          <p>Downloads, versions and features may change, be updated, or be removed at any time without notice. Zenex does not guarantee uninterrupted availability of the site or any download link.</p>
+        </section>
 
-          <section id="changes" class="reveal">
-            <h2>6. Changes to these terms</h2>
-            <p>These terms may be updated from time to time. Continued use of the site after changes are posted means you accept the updated terms.</p>
-          </section>
+        <section id="changes" class="reveal">
+          <h2><span>06</span> Changes to these terms</h2>
+          <p>These terms may be updated from time to time. Continued use of the site after changes are posted means you accept the updated terms.</p>
+        </section>
 
-          <section id="contact" class="reveal">
-            <h2>7. Contact</h2>
-            <p>Questions about these terms can be asked in the <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Zenex Discord</a>.</p>
-          </section>
-
-        </div>
+        <section id="contact" class="reveal">
+          <h2><span>07</span> Contact</h2>
+          <p>Questions about these terms can be asked in the <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Zenex Discord</a>.</p>
+        </section>
       </div>
+
     </div>
   </section>
 
 </main>
 
 <footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <span class="brand-name">Zenex<span class="accent">Mods</span></span>
-      <p>Minecraft client mods, done cleanly.</p>
+  <div class="shell">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html#home" class="brand">
+          <span class="brand-mark">Z</span>
+          <span class="brand-name">Zenex<span class="accent">Mods</span></span>
+        </a>
+        <p>Minecraft client mods, done cleanly. Direct downloads, honest docs, and a Discord that actually answers.</p>
+        <div class="footer-socials">
+          <a class="social-btn" href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener" aria-label="Discord">
+            <svg viewBox="0 0 24 24"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.045-.32 13.579.099 18.057a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.128 12.3 12.3 0 0 1-1.873.891.076.076 0 0 0-.04.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/></svg>
+          </a>
+          <a class="social-btn" href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.12-2.13C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.52A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.13c1.88.52 9.38.52 9.38.52s7.5 0 9.38-.52a3 3 0 0 0 2.12-2.13A31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8ZM9.55 15.57V8.43L15.82 12Z"/></svg>
+          </a>
+          <a class="social-btn" href="https://modrinth.com/mod/fabric-api" target="_blank" rel="noopener" aria-label="Fabric API on Modrinth">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 18V7l4 5 4-5 4 5 4-5v11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Mods</h4>
+        <a href="meteor-client.html">Meteor Client</a>
+        <a href="glazed.html">Glazed</a>
+        <a href="downloads.html">RigMaster V2</a>
+        <a href="downloads.html">CPVP Tweaks</a>
+        <a href="downloads.html">All downloads</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Help</h4>
+        <a href="tutorials.html">Install guide</a>
+        <a href="faq.html">FAQ</a>
+        <a href="index.html#fabric">Fabric API</a>
+        <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Get support</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Zenex</h4>
+        <a href="index.html#home">Home</a>
+        <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Discord</a>
+        <a href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener">YouTube</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
     </div>
-    <div class="footer-links">
-      <h3>Quick links</h3>
-      <a href="index.html#home">Home</a>
-      <a href="downloads.html">Downloads</a>
-      <a href="tutorials.html">Tutorials</a>
-      <a href="faq.html">FAQ</a>
-      <a href="terms.html">Terms</a>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> Zenex Mods. All rights reserved.</p>
+      <p>Not affiliated with Mojang Studios or Microsoft.</p>
     </div>
-    <div class="footer-social">
-      <h3>Community</h3>
-      <a href="https://discord.gg/XZ8gc8nBsU" target="_blank" rel="noopener">Discord</a>
-      <a href="https://www.youtube.com/@ZenexDev" target="_blank" rel="noopener">YouTube</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>&copy; <span id="year"></span> Zenex Mods. All rights reserved.</p>
   </div>
 </footer>
 
+<button class="to-top" id="to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 20V7M6 12l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
 <script src="script.js"></script>
+<script>
+  // Keep the "last updated" year in sync with the footer year.
+  document.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('year-inline');
+    if (el) el.textContent = new Date().getFullYear();
+  });
+</script>
 </body>
 </html>
